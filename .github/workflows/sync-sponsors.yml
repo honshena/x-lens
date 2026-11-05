@@ -1,0 +1,38 @@
+name: Sync sponsors
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-sponsors
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Update approved sponsors
+        env:
+          AFDIAN_USER_ID: ${{ secrets.AFDIAN_USER_ID }}
+          AFDIAN_TOKEN: ${{ secrets.AFDIAN_TOKEN }}
+          AFDIAN_APPROVED_USER_IDS: ${{ secrets.AFDIAN_APPROVED_USER_IDS }}
+        run: node scripts/sync-sponsors.mjs
+      - name: Commit updated list
+        run: |
+          if git diff --quiet -- sponsors/leaderboard.json; then
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add sponsors/leaderboard.json
+          git commit -m 'Update approved sponsors'
+          git push
