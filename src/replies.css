@@ -1,0 +1,63 @@
+.replies {
+  margin-top: 20px;
+  border-top: 1px solid #303632;
+  padding-top: 14px;
+}
+.replies-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #a4afa5;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.reply { display: flex; gap: 10px; margin: 14px 0; }
+.reply-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; flex: none; }
+.reply-content { min-width: 0; }
+.reply-meta { display: flex; gap: 5px; color: #7f8781; font-size: 12px; overflow: hidden; white-space: nowrap; }
+.reply-meta strong { color: #d8ded8; overflow: hidden; text-overflow: ellipsis; }
+.reply-text { color: #c6cdc6; font-size: 13px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; margin-top: 4px; }
+.reply-status, .reply-retry { color: #858f86; font-size: 12px; }
+.reply-retry { border: 0; padding: 0; background: none; text-align: left; }
+.reply-retry:hover { color: #c8d7aa; }
+
+.layout {
+  display: block;
+  max-width: 650px;
+  min-height: 100vh;
+}
+.main { border-left: 1px solid #292b2d; }
+.detail-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #101113;
+}
+.detail-main { width: min(650px, 100%); min-height: 100%; margin: 0 auto; }
+html[data-theme='light'] .detail-overlay { background: #fff; }
+.post-clickable { cursor: pointer; }
+.post-clickable:focus-visible { outline: 2px solid #b6ce90; outline-offset: -2px; }
+.detail-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 24px;
+  background: #101113ef;
+  border-bottom: 1px solid #292b2d;
+}
+.detail-header h1 { font-size: 20px; margin: 0; }
+.detail-title { padding: 18px 32px; border-bottom: 1px solid #292b2d; font-weight: 700; font-size: 14px; }
+.detail-status { padding: 24px; text-align: center; color: #89948a; font-size: 13px; }
+.detail-status button { border: 1px solid #52604e; background: #252e25; color: #d0e0be; border-radius: 4px; padding: 9px 22px; }
+@media (max-width: 680px) {
+  .layout { width: 100%; }
+  .main { border: 0; }
+  .detail-header { padding: 12px 20px; }
+  .detail-title { padding: 18px 20px; }
+}

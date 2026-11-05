@@ -1,0 +1,49 @@
+.post-action, .translate-button {
+  border: 0;
+  background: transparent;
+  color: #8b9b8d;
+  padding: 4px;
+}
+.post-action:hover, .translate-button:hover { color: #1d9bf0; }
+.translate-button { display: flex; align-items: center; gap: 5px; font-size: 12px; margin-top: 8px; }
+.translation { border-left: 2px solid #1d9bf0; padding: 6px 10px; margin-top: 8px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; }
+.reply-translation { font-size: 13px; }
+.post-text-controls { display: flex; align-items: center; gap: 12px; margin-top: 6px; font-size: 12px; color: #858f86; }
+.post-text-controls button { padding: 0; border: 0; background: transparent; color: #1d9bf0; }
+.post-text-controls button:hover { text-decoration: underline; }
+.x-verified { flex: none; }
+.media .ant-image { width: 100%; height: 100%; }
+.media .ant-image img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+.settings-button, .sponsor-button, .privacy-mask button {
+  position: fixed; right: 24px; bottom: 76px; width: 40px; height: 40px;
+  display: grid; place-items: center; border: 1px solid #383b3d;
+  border-radius: 5px; color: #c3cac2; background: #1c1f20; z-index: 4;
+}
+.sponsor-button { bottom: 128px; }
+.sponsor-modal p, .sponsor-ranking p { color: #858f86; font-size: 12px; line-height: 1.6; }
+.sponsor-modal h3 { font-size: 15px; margin: 20px 0 8px; }
+.sponsor-link { display: inline-block; color: #1d9bf0; font-weight: 600; }
+.sponsor-ranking ol { list-style: none; padding: 0; margin: 0; max-height: 240px; overflow-y: auto; }
+.sponsor-ranking li { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+.sponsor-ranking img, .sponsor-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+.sponsor-avatar { display: grid; place-items: center; background: #3b4540; color: #fff; }
+.sponsor-rank { width: 24px; color: #858f86; text-align: center; }
+.sponsor-name { overflow-wrap: anywhere; }
+.settings-form { display: grid; gap: 10px; }
+.settings-form > label { font-weight: 600; margin-top: 8px; }
+.settings-form p { color: #858f86; font-size: 12px; margin: 0; line-height: 1.6; }
+.settings-form .settings-error { color: #e45c5c; }
+.selection-translation { position: fixed; z-index: 1001; max-width: min(400px, 90vw); background: #303a35; color: white; border-radius: 4px; padding: 8px; display: flex; gap: 10px; font-size: 13px; }
+.selection-translation button { background: transparent; border: 0; color: white; }
+.privacy-mask { position: fixed; inset: 0; z-index: 2147483647; background: #101113; }
+.privacy-mask button { z-index: 1; bottom: 24px; }
+html, .detail-overlay { scrollbar-width: thin; scrollbar-color: #555b5e #101113; }
+html { scrollbar-gutter: stable; }
+html[data-theme='light'], html[data-theme='light'] .detail-overlay { scrollbar-color: #aeb6b2 #f5f7f5; }
+html[data-theme='light'] { color-scheme: light; background: #fff; color: #111; }
+html[data-theme='light'] body { background: #fff; color: #171b19; }
+html[data-theme='light'] .main, html[data-theme='light'] .post, html[data-theme='light'] .feed-top, html[data-theme='light'] .replies, html[data-theme='light'] .detail-title, html[data-theme='light'] .detail-header { border-color: #e2e5e2; }
+html[data-theme='light'] .post:hover, html[data-theme='light'] .detail-header { background: #f7f9f7; }
+html[data-theme='light'] .post-text, html[data-theme='light'] .reply-text, html[data-theme='light'] .reply-meta strong, html[data-theme='light'] .state { color: #202722; }
+html[data-theme='light'] .icon-button, html[data-theme='light'] .back-top, html[data-theme='light'] .settings-button, html[data-theme='light'] .sponsor-button { background: #f5f7f5; color: #303b32; border-color: #d8ddd8; }
+@media (max-width: 680px) { .settings-button { right: 16px; bottom: 68px; } .sponsor-button { right: 16px; bottom: 120px; } }
