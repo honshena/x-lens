@@ -33,29 +33,29 @@ export async function fetchSponsors(userId, token, fetcher = fetch) {
   return sponsors;
 }
 
-export function makeLeaderboard(rows, approvedIds) {
-  const approved = rows.filter((row) => approvedIds.has(row.user?.user_id));
-  approved.sort((first, second) => Number(second.all_sum_amount) - Number(first.all_sum_amount));
-  return { sponsors: normalizeSponsors({ sponsors: approved.map((row) => ({
+export function makeLeaderboard(rows, blockedIds) {
+  if (rows.some((row) => typeof row.user?.user_id !== 'string' || !row.user.user_id.trim())) {
+    throw new Error('Afdian returned a sponsor without a user ID');
+  }
+  const visible = rows.filter((row) => !blockedIds.has(row.user.user_id));
+  visible.sort((first, second) => Number(second.all_sum_amount) - Number(first.all_sum_amount));
+  return { sponsors: normalizeSponsors({ sponsors: visible.map((row) => ({
     name: row.user.name,
     avatar: row.user.avatar,
   })) }) };
 }
 
 async function main() {
-  const { AFDIAN_USER_ID, AFDIAN_TOKEN, AFDIAN_APPROVED_USER_IDS } = process.env;
-  if (!AFDIAN_USER_ID || !AFDIAN_TOKEN || !AFDIAN_APPROVED_USER_IDS?.trim()) {
-    throw new Error('Missing Afdian credentials or approved sponsor IDs');
+  const { AFDIAN_USER_ID, AFDIAN_TOKEN, AFDIAN_BLOCKED_USER_IDS = '' } = process.env;
+  if (!AFDIAN_USER_ID || !AFDIAN_TOKEN) {
+    throw new Error('Missing Afdian credentials');
   }
-  const approvedIds = new Set(AFDIAN_APPROVED_USER_IDS.split(/[\s,]+/).filter(Boolean));
+  const blockedIds = new Set(AFDIAN_BLOCKED_USER_IDS.split(/[\s,]+/).filter(Boolean));
   const rows = await fetchSponsors(AFDIAN_USER_ID, AFDIAN_TOKEN);
-  const leaderboard = makeLeaderboard(rows, approvedIds);
-  if (leaderboard.sponsors.length !== approvedIds.size) {
-    throw new Error('Approved sponsor IDs do not match available sponsor records');
-  }
+  const leaderboard = makeLeaderboard(rows, blockedIds);
   await writeFile(new URL('../sponsors/leaderboard.json', import.meta.url),
     `${JSON.stringify(leaderboard, null, 2)}\n`, 'utf8');
-  console.log(`Updated ${leaderboard.sponsors.length} approved sponsors.`);
+  console.log(`Updated ${leaderboard.sponsors.length} sponsors.`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

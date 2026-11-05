@@ -23,13 +23,20 @@ test('fetches all pages and rejects invalid responses', async () => {
   })));
 });
 
-test('publishes only approved users in amount order without sensitive fields', () => {
+test('excludes blocked users and sorts without exposing sensitive fields', () => {
   const rows = [
     { all_sum_amount: '2.00', user: { user_id: 'a', name: 'A', avatar: 'https://example.com/a' } },
     { all_sum_amount: '12.00', user: { user_id: 'b', name: 'B', avatar: 'javascript:alert(1)' } },
     { all_sum_amount: '99.00', user: { user_id: 'c', name: 'C' } },
   ];
-  assert.deepEqual(makeLeaderboard(rows, new Set(['a', 'b'])), { sponsors: [
+  assert.deepEqual(makeLeaderboard(rows, new Set(['c'])), { sponsors: [
     { name: 'B', avatar: '' }, { name: 'A', avatar: 'https://example.com/a' },
   ] });
+  assert.deepEqual(makeLeaderboard(rows, new Set()).sponsors.map((item) => item.name),
+    ['C', 'B', 'A']);
+  assert.deepEqual(makeLeaderboard(rows, new Set(['a', 'b', 'c'])), { sponsors: [] });
+});
+
+test('rejects sponsor records without a user id instead of bypassing the blacklist', () => {
+  assert.throws(() => makeLeaderboard([{ user: { name: 'Unknown' } }], new Set(['a'])));
 });
