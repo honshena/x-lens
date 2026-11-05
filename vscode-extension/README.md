@@ -19,7 +19,7 @@ X-Lens provides a compact, single-column view for browsing posts, media, and rep
 The extension includes the reader and starts its local service on an available
 loopback port. No separate application or Node.js installation is required.
 
-1. Open the command palette and run **X-Lens: Open**.
+1. Select the X-Lens icon in the activity bar, or run **X-Lens: Open** from the command palette. Drag the sidebar edge to adjust its width.
 2. In the reader's settings, enter your own X `auth_token` and `ct0` cookies.
 
 ## Privacy and limitations

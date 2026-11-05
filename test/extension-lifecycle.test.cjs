@@ -9,17 +9,27 @@ test('opens the bundled service on its announced port and disposes it', async ()
   child.kill = () => { killed = true; };
   let startOptions;
   let command;
-  let panel;
+  let provider;
+  let providerOptions;
+  let focused;
+  const opened = [];
+  let onMessage;
   const vscode = {
-    commands: { registerCommand: (_name, handler) => { command = handler; return { dispose() {} }; } },
+    Uri: { parse: (value) => new URL(value) },
+    env: { openExternal: async (value) => { opened.push(value.href); } },
+    commands: {
+      registerCommand: (_name, handler) => { command = handler; return { dispose() {} }; },
+      executeCommand: async (name) => { focused = name; },
+    },
     window: {
-      createWebviewPanel: (_type, _title, _column, options) => {
-        panel = { options, webview: {} };
-        return panel;
+      registerWebviewViewProvider: (id, value, options) => {
+        assert.equal(id, 'xLens.open');
+        provider = value;
+        providerOptions = options;
+        return { dispose() {} };
       },
       showErrorMessage: (message) => { throw new Error(message); },
     },
-    ViewColumn: { One: 1 },
   };
   const original = Module._load;
   Module._load = function (name, ...args) {
@@ -39,11 +49,26 @@ test('opens the bundled service on its announced port and disposes it', async ()
     subscriptions: [], extensionPath: __dirname, globalStorageUri: { fsPath: require('node:os').tmpdir() },
   };
   extension.activate(context);
+  assert.equal(providerOptions.webviewOptions.retainContextWhenHidden, true);
   await command();
+  assert.equal(focused, 'xLens.open.focus');
+  const view = { webview: { onDidReceiveMessage: (handler) => {
+    onMessage = handler;
+    return { dispose() {} };
+  } } };
+  await provider.resolveWebviewView(view);
   assert.equal(startOptions.env.FEEDLENS_PORT, '0');
   assert.match(startOptions.env.FEEDLENS_ENV_FILE, /\.env$/);
-  assert.deepEqual(panel.options.portMapping, [{ webviewPort: 45678, extensionHostPort: 45678 }]);
-  assert.match(panel.webview.html, /127\.0\.0\.1:45678/);
+  assert.deepEqual(view.webview.options.portMapping, [{ webviewPort: 45678, extensionHostPort: 45678 }]);
+  assert.match(view.webview.html, /127\.0\.0\.1:45678/);
+  assert.match(view.webview.html, /width:100%;height:100%/);
+  assert.match(view.webview.html, /host=vscode/);
+  await onMessage({ type: 'openExternal', url: 'https://x.com/example' });
+  await onMessage({ type: 'openExternal', url: 'https://afdian.com/a/honshenai/' });
+  await onMessage({ type: 'openExternal', url: 'https://x.com.evil.test/' });
+  await onMessage({ type: 'openExternal', url: 'javascript:alert(1)' });
+  assert.deepEqual(opened, ['https://x.com/example', 'https://afdian.com/a/honshenai/']);
+  assert.equal(typeof command, 'function');
   context.subscriptions.forEach((item) => item.dispose());
   assert.equal(killed, true);
 });

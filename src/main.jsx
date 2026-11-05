@@ -12,6 +12,7 @@ import { Video } from './video.jsx';
 import { createSelectionTranslator } from './selection-translation.mjs';
 import { summarizePostText } from './post-text.mjs';
 import { SponsorModal } from './sponsor.jsx';
+import { installExternalLinkBridge } from './external-links.mjs';
 import './style.css';
 import './replies.css';
 import './enhancements.css';
@@ -365,4 +366,5 @@ function App() {
   </ConfigProvider></Preferences.Provider>;
 }
 
+installExternalLinkBridge(window, document);
 createRoot(document.getElementById('root')).render(<App />);

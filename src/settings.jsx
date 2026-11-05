@@ -47,7 +47,7 @@ export function Settings({ open, onClose, settings, update, onSaveCredentials })
       <Input.Password placeholder="ct0" value={ct0} onChange={(event) => setCt0(event.target.value)} autoComplete="off" />
       {error && <p className="settings-error">{error}</p>}
       <Button type="primary" loading={saving} onClick={save}>保存认证配置</Button>
-      <label>赞助排行</label>
+      <label>赞助用户</label>
       {open && <SponsorRanking />}
     </div>
   </Modal>;

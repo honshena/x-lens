@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { normalizeSponsors } from '../src/sponsors.mjs';
 
 test('keeps approved ranking order without exposing amounts or unsafe avatar URLs', () => {
@@ -16,4 +17,22 @@ test('keeps approved ranking order without exposing amounts or unsafe avatar URL
 test('rejects missing or invalid lists', () => {
   assert.deepEqual(normalizeSponsors(null), []);
   assert.deepEqual(normalizeSponsors({ sponsors: 'invalid' }), []);
+});
+
+test('sponsor interface uses the requested title and notice', async () => {
+  const sponsor = await readFile(new URL('../src/sponsor.jsx', import.meta.url), 'utf8');
+  const settings = await readFile(new URL('../src/settings.jsx', import.meta.url), 'utf8');
+  assert.match(sponsor, /<h3>赞助用户<\/h3>/);
+  assert.match(settings, /<label>赞助用户<\/label>/);
+  assert.match(sponsor, /<p>昵称和头像不得包含敏感或不适宜内容，违规信息可能被下架。<\/p>/);
+  assert.doesNotMatch(sponsor + settings, /赞助排行|排行榜仅显示/);
+});
+
+test('sponsors flow from left to right without visible ranking numbers', async () => {
+  const sponsor = await readFile(new URL('../src/sponsor.jsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/enhancements.css', import.meta.url), 'utf8');
+  const preview = await readFile(new URL('../sponsor-preview.html', import.meta.url), 'utf8');
+  assert.doesNotMatch(sponsor + preview, /sponsor-rank[" ]/);
+  assert.match(styles, /\.sponsor-ranking ul\s*\{[^}]*display:\s*flex/s);
+  assert.match(styles, /\.sponsor-ranking ul\s*\{[^}]*flex-wrap:\s*wrap/s);
 });

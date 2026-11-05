@@ -23,11 +23,11 @@
 .sponsor-modal p, .sponsor-ranking p { color: #858f86; font-size: 12px; line-height: 1.6; }
 .sponsor-modal h3 { font-size: 15px; margin: 20px 0 8px; }
 .sponsor-link { display: inline-block; color: #1d9bf0; font-weight: 600; }
-.sponsor-ranking ol { list-style: none; padding: 0; margin: 0; max-height: 240px; overflow-y: auto; }
-.sponsor-ranking li { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+.sponsor-ranking ul { display: flex; flex-wrap: wrap; gap: 12px 16px; list-style: none; padding: 4px 0; margin: 0; max-height: 240px; overflow-y: auto; }
+.sponsor-ranking li { display: flex; align-items: center; gap: 8px; min-width: 0; max-width: 100%; }
 .sponsor-ranking img, .sponsor-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
 .sponsor-avatar { display: grid; place-items: center; background: #3b4540; color: #fff; }
-.sponsor-rank { width: 24px; color: #858f86; text-align: center; }
+.sponsor-ranking img, .sponsor-avatar { flex: none; }
 .sponsor-name { overflow-wrap: anywhere; }
 .settings-form { display: grid; gap: 10px; }
 .settings-form > label { font-weight: 600; margin-top: 8px; }

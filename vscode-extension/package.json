@@ -2,14 +2,20 @@
   "name": "x-lens",
   "displayName": "X-Lens",
   "description": "Browse your X recommendations, replies and media in VS Code, with translation and a built-in local reader.",
-  "version": "0.1.0",
+  "version": "0.2.3",
   "publisher": "X-Lens",
   "icon": "assets/feedlens.png",
   "engines": { "vscode": "^1.85.0" },
   "categories": ["Other"],
-  "activationEvents": ["onCommand:twView.open"],
+  "activationEvents": ["onCommand:twView.open", "onView:xLens.open"],
   "main": "./extension.cjs",
   "license": "SEE LICENSE IN LICENSE",
-  "files": ["extension.cjs", "bundled/**", "assets/feedlens.png", "README.md", "LICENSE", "THIRD_PARTY_NOTICES.txt"],
-  "contributes": { "commands": [{ "command": "twView.open", "title": "X-Lens: Open" }] }
+  "files": ["extension.cjs", "bundled/**", "assets/feedlens.png", "assets/activity.svg", "README.md", "LICENSE", "THIRD_PARTY_NOTICES.txt"],
+  "contributes": {
+    "commands": [{ "command": "twView.open", "title": "X-Lens: Open" }],
+    "viewsContainers": {
+      "activitybar": [{ "id": "xLens", "title": "X-Lens", "icon": "assets/activity.svg" }]
+    },
+    "views": { "xLens": [{ "type": "webview", "id": "xLens.open", "name": "X-Lens" }] }
+  }
 }
