@@ -8,7 +8,7 @@ export function installExternalLinkBridge(win, doc) {
     let url;
     try { url = new URL(anchor.href); } catch { return; }
     if (url.protocol !== 'https:' || url.port || url.username || url.password
-      || !['x.com', 'afdian.com'].includes(url.hostname)) return;
+      || !['x.com', 'afdian.com', 'ko-fi.com'].includes(url.hostname)) return;
     event.preventDefault();
     win.parent.postMessage({ type: 'openExternal', url: url.href }, '*');
   }, true);

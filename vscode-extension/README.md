@@ -12,7 +12,7 @@ X-Lens provides a compact, single-column view for browsing posts, media, and rep
 - Translate a post or selected text into a configured language.
 - Switch between light and dark themes, or follow your system setting.
 - Hide and reveal the page using a configurable shortcut.
-- Support development via [Afdian](https://afdian.com/a/honshenai/) and view the public supporter ranking.
+- Support development via [Afdian](https://afdian.com/a/honshenai/) or [Ko-fi](https://ko-fi.com/honshen/) and view the public supporter list.
 
 ## Setup
 

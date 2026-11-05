@@ -1,3 +1,8 @@
+export const sponsorChannels = [
+  { key: 'afdian', label: '爱发电', url: 'https://raw.githubusercontent.com/honshena/x-lens/main/sponsors/leaderboard.json' },
+  { key: 'kofi', label: 'Ko-fi', url: 'https://raw.githubusercontent.com/honshena/x-lens/main/sponsors/kofi.json' },
+];
+
 export function normalizeSponsors(data) {
   if (!Array.isArray(data?.sponsors)) return [];
   return data.sponsors.flatMap((entry) => {

@@ -2,7 +2,7 @@
   "name": "x-lens",
   "displayName": "X-Lens",
   "description": "Browse your X recommendations, replies and media in VS Code, with translation and a built-in local reader.",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "publisher": "X-Lens",
   "icon": "assets/feedlens.png",
   "engines": { "vscode": "^1.85.0" },

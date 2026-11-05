@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, Tabs } from 'antd';
 import axios from 'axios';
-import { normalizeSponsors } from './sponsors.mjs';
+import { normalizeSponsors, sponsorChannels } from './sponsors.mjs';
 
-const sponsorData = 'https://raw.githubusercontent.com/honshena/x-lens/main/sponsors/leaderboard.json';
-
-export function SponsorRanking() {
+function SponsorList({ url }) {
   const [state, setState] = useState({ loading: true, sponsors: [], error: false });
   useEffect(() => {
     let active = true;
-    axios.get(sponsorData, { timeout: 10000 }).then(({ data }) => {
+    axios.get(url, { timeout: 10000 }).then(({ data }) => {
       if (active) setState({ loading: false, sponsors: normalizeSponsors(data), error: false });
     }).catch(() => {
       if (active) setState({ loading: false, sponsors: [], error: true });
     });
     return () => { active = false; };
-  }, []);
+  }, [url]);
   return <div className="sponsor-ranking">
     {state.loading && <p>正在加载赞助用户...</p>}
     {state.error && <p>赞助用户暂时无法加载，请稍后再试。</p>}
@@ -29,11 +27,22 @@ export function SponsorRanking() {
   </div>;
 }
 
+export function SponsorRanking() {
+  return <Tabs items={sponsorChannels.map((channel) => ({
+    key: channel.key,
+    label: channel.label,
+    children: <SponsorList url={channel.url} />,
+  }))} />;
+}
+
 export function SponsorModal({ open, onClose }) {
   return <Modal title="赞助 X-Lens" open={open} onCancel={onClose} footer={null} destroyOnClose>
     <div className="sponsor-modal">
       <p>感谢支持 X-Lens 的维护与开发。</p>
-      <a className="sponsor-link" href="https://afdian.com/a/honshenai/" target="_blank" rel="noreferrer">前往爱发电赞助</a>
+      <div className="sponsor-links">
+        <a className="sponsor-link" href="https://afdian.com/a/honshenai/" target="_blank" rel="noreferrer">爱发电</a>
+        <a className="sponsor-link" href="https://ko-fi.com/honshen" target="_blank" rel="noreferrer">Ko-fi</a>
+      </div>
       <h3>赞助用户</h3>
       <SponsorRanking />
     </div>

@@ -18,9 +18,9 @@ npm run dev
 
 ## 赞助
 
-通过 [爱发电](https://afdian.com/a/honshenai/) 支持项目。公开赞助排行由仓库的
-`sponsors/leaderboard.json` 维护，发布前应取得赞助者同意并审核头像、昵称；暂不支持
-自动核验付款或自动隐藏赞助按钮。
+通过 [爱发电](https://afdian.com/a/honshenai/) 或 [Ko-fi](https://ko-fi.com/honshen/) 支持项目。
+公开赞助用户按渠道分别展示：爱发电自动同步，Ko-fi 在 `sponsors/kofi.json` 中人工维护；
+请确认公开展示符合隐私要求并及时处理下架请求。暂不支持自动核验付款或自动隐藏赞助按钮。
 
 ## 许可
 

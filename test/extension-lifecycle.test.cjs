@@ -65,9 +65,11 @@ test('opens the bundled service on its announced port and disposes it', async ()
   assert.match(view.webview.html, /host=vscode/);
   await onMessage({ type: 'openExternal', url: 'https://x.com/example' });
   await onMessage({ type: 'openExternal', url: 'https://afdian.com/a/honshenai/' });
+  await onMessage({ type: 'openExternal', url: 'https://ko-fi.com/honshen' });
+  await onMessage({ type: 'openExternal', url: 'https://ko-fi.com.evil.test/' });
   await onMessage({ type: 'openExternal', url: 'https://x.com.evil.test/' });
   await onMessage({ type: 'openExternal', url: 'javascript:alert(1)' });
-  assert.deepEqual(opened, ['https://x.com/example', 'https://afdian.com/a/honshenai/']);
+  assert.deepEqual(opened, ['https://x.com/example', 'https://afdian.com/a/honshenai/', 'https://ko-fi.com/honshen']);
   assert.equal(typeof command, 'function');
   context.subscriptions.forEach((item) => item.dispose());
   assert.equal(killed, true);

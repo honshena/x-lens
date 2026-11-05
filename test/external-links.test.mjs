@@ -15,10 +15,12 @@ test('forwards approved external links only in the VS Code frame', () => {
   handler(click('https://x.com/example/status/123'));
   assert.equal(prevented, true);
   assert.deepEqual(sent[0].message, { type: 'openExternal', url: 'https://x.com/example/status/123' });
+  handler(click('https://ko-fi.com/honshen'));
+  assert.equal(sent[1].message.url, 'https://ko-fi.com/honshen');
   prevented = false;
   handler(click('https://malicious.example/'));
   assert.equal(prevented, false);
-  assert.equal(sent.length, 1);
+  assert.equal(sent.length, 2);
 });
 
 test('does not modify standalone browser navigation', () => {

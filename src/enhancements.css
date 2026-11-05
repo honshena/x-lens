@@ -23,6 +23,7 @@
 .sponsor-modal p, .sponsor-ranking p { color: #858f86; font-size: 12px; line-height: 1.6; }
 .sponsor-modal h3 { font-size: 15px; margin: 20px 0 8px; }
 .sponsor-link { display: inline-block; color: #1d9bf0; font-weight: 600; }
+.sponsor-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
 .sponsor-ranking ul { display: flex; flex-wrap: wrap; gap: 12px 16px; list-style: none; padding: 4px 0; margin: 0; max-height: 240px; overflow-y: auto; }
 .sponsor-ranking li { display: flex; align-items: center; gap: 8px; min-width: 0; max-width: 100%; }
 .sponsor-ranking img, .sponsor-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }

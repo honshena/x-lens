@@ -67,7 +67,7 @@ function activate(context) {
           let target;
           try { target = new URL(message.url); } catch { return; }
           if (target.protocol !== 'https:' || target.port || target.username || target.password
-            || !['x.com', 'afdian.com'].includes(target.hostname)) return;
+            || !['x.com', 'afdian.com', 'ko-fi.com'].includes(target.hostname)) return;
           await vscode.env.openExternal(vscode.Uri.parse(target.href));
         }));
         view.webview.html = `<!doctype html><html><head>
